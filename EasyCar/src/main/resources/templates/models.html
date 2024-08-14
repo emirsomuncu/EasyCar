@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymleaf.com">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Easy Car</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .navbar {
+            margin-bottom: 20px;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            height: calc(100vh - 56px);
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 56px;
+            left: 0;
+            overflow-y: auto;
+        }
+        .content {
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .list-group-item {
+            font-size: 1rem;
+            padding: 10px;
+        }
+        .navbar-nav.ms-auto {
+            margin-left: auto;
+        }
+        .card-scroll-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: flex-start;
+        }
+
+        .card {
+            width: 18rem;
+            box-sizing: border-box;
+            flex-grow: 0;
+        }
+        .premium-message {
+            margin-bottom: 10px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .premium-message-container {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Easy Car</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">" The easiest way to buy a vehicle "</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="sidebar">
+
+    <h5 class="m-1">Models</h5>
+
+    <ul class="list-group">
+        <th:block th:each="model : ${getAllModelByBrandIdResponses}">
+            <a class="list-group-item list-group-item-action"
+               th:href="@{/car/getCars(id=${model.id})}"
+               th:text="${model.name}">
+
+            </a>
+        </th:block>
+    </ul>
+
+</div>
+
+<div class="content">
+
+    <div class="card-scroll-container">
+
+        <div class="premium-message-container" >
+            <p class="premium-message"> The ads appearing in this area are premium ads , If you would like your ad to be featured here, contact us via easycar@gmail.com  </p>
+        </div>
+
+        <th:block th:each="car : ${getCarByModelIdAndPremiums}">
+
+            <div class="card" style="width: 18rem;">
+                <img src="/indir.jpeg" class="card-img-top" alt="...">  <!-- Resim işini çözünce buraı hallet -->
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${car.carTitle}"></h5>
+                    <p class="card-text" th:text="${car.carExplanation}"></p>
+                    <a class="btn btn-primary" th:href="@{/car/getCarDetail(id=${car.id})}">More information</a>
+                </div>
+            </div>
+
+        </th:block>
+
+    </div>
+
+
+
+</div>
+ </body>
+</html>
